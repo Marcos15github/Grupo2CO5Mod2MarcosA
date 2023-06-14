@@ -29,13 +29,13 @@ class Spaceship(Sprite):
     def move_left(self):
         if self.rect.x > 40:
             self.rect.x -= self.SHIP_SPEED
-            print(self.rect.x)
+            #print(self.rect.x)
         else : self.rect.x = SCREEN_WIDTH
         
     def move_right(self):
         if self.rect.x < (SCREEN_WIDTH - self.SHIP_WIDTH): 
             self.rect.x += self.SHIP_SPEED
-            print(self.rect.x)
+            #print(self.rect.x)
         else : self.rect.x = 40
 
     def move_up(self):
