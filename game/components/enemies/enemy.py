@@ -1,6 +1,7 @@
 import random
 import pygame
 from pygame.sprite import Sprite
+from game.components.bullets.bullet import Bullet
 from game.utils.constants import ENEMY_1, ENEMY_2, SCREEN_HEIGHT, SCREEN_WIDTH
 
 class Enemy(Sprite):
@@ -12,7 +13,7 @@ class Enemy(Sprite):
     SPEED_X = 5
     MOV_X = {0: 'left', 1: 'right'}
     #ENEMY_TYPE = {0: ENEMY_1, 1: ENEMY_2} # -  - - - - - - - - - - Forma 1 - - - - - - - #
-    IMAGE = [ENEMY_1, ENEMY_2]  # -  - - - - - - - - - - Forma 2 - - - - - - - #
+    IMAGE = [ENEMY_1, ENEMY_2]  # - - - - - - - - - - - Forma 2 - - - - - - - #
 
     def __init__(self): #Pregunta para el profesor, ¿como se haría utilizando parametro?
         #self.image = self.ENEMY_TYPE[random.randint(0, 1)] # -  - - - - - - - - - - Forma 1 - - - - - - - #
@@ -51,3 +52,10 @@ class Enemy(Sprite):
         elif (self.index >= self.move_x_for and self.movement_x == 'left') or (self.rect.x <=10):
             self.movement_x = 'right'
             self.index = 0
+    
+    def shoot(self, bullet_Manager):
+        current_time = pygame.time.get_ticks()
+        if self.shooting_time <= current_time:
+            bullet = Bullet(self)
+            bullet_Manager.add_bullet(bullet)
+            self.shooting_time += random.randint(30, 50)
