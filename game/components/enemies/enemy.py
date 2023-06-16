@@ -12,24 +12,25 @@ class Enemy(Sprite):
     SPEED_Y = 1
     SPEED_X = 5
     MOV_X = {0: 'left', 1: 'right'}
-    #ENEMY_TYPE = {0: ENEMY_1, 1: ENEMY_2} # -  - - - - - - - - - - Forma 1 - - - - - - - #
-    IMAGE = [ENEMY_1, ENEMY_2]  # - - - - - - - - - - - Forma 2 - - - - - - - #
+    IMAGE = {1: ENEMY_1, 2: ENEMY_2}
 
-    def __init__(self): #Pregunta para el profesor, ¿como se haría utilizando parametro?
-        #self.image = self.ENEMY_TYPE[random.randint(0, 1)] # -  - - - - - - - - - - Forma 1 - - - - - - - #
-        self.image = random.choice(self.IMAGE) # -  - - - - - - - - - - Forma 2 - - - - - - - #
+    def __init__(self, image = 1, speed_x = SPEED_X, speed_y = SPEED_Y, move_x_for = [30, 100]):
+        self.image = self.IMAGE[image]
         self.image = pygame.transform.scale(self.image,(self.SHIP_WIDTH, self.SHIP_HEIGHT))
         self.rect = self.image.get_rect()
         self.rect.y = self.Y_POS
         self.rect.x = self.X_POS_LIST[random.randint(0, 10)]
-        self.speed_x = self.SPEED_X
-        self.speed_y = self.SPEED_Y
+        self.speed_x = speed_x
+        self.speed_y = speed_y
         self.movement_x = self.MOV_X[random.randint(0,1)]
-        self.move_x_for = random.randint(30, 100)
+        self.move_x_for = random.randint(move_x_for[0], move_x_for[1])
         self.index = 0
+        self.type = 'enemy'
+        self.shooting_time = random.randint(30, 50)
 
-    def update(self, ships):
+    def update(self, ships, game):
         self.rect.y += self.speed_y
+        self.shoot(game.bullet_manager)
 
         if self.movement_x == 'left':
             self.rect.x -= self.speed_x
