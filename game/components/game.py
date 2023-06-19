@@ -2,7 +2,6 @@ import pygame
 from game.components.bullets.bullet_manager import BulletManager
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.menu import Menu
-from game.components.
 from game.components.power_ups.power_up_manager import PowerUpManager
 
 from game.utils.constants import BG, FONT_STYLE, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
@@ -37,10 +36,14 @@ class Game:
                 #implementar
         pygame.display.quit()
         pygame.quit()
-
+        
     def run(self):
         # Game loop: events - update - draw
+        pygame.mixer.music.load('musica.mp3')  # Cargar música de fondo en formato MP3
+        pygame.mixer.music.set_volume(0.3)  # Ajustar volumen de la música de fondo
+        pygame.mixer.music.play(-1) 
         self.score = 0
+        
         self.bullet_manager.reset()  #implementar
         self.enemy_manager.reset() #implementar
         self.playing = True
@@ -48,7 +51,7 @@ class Game:
             self.events()
             self.update()
             self.draw()
-
+        
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -91,8 +94,11 @@ class Game:
 
         self.menu.reset_screen_color(self.screen)
 
-        if self.death_count >0:
-            self.menu.update_message("La tarea aca")
+        if self.death_count > 0:
+            
+            self.menu.update_message(f"Deaths: {self.death_count} Score: {self.score}")
+            
+
         icon = pygame.transform.scale (ICON, (80,120))
         self.screen.blit(icon, (half_screen_width - 50, half_screen_height -120))
 

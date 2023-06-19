@@ -34,4 +34,9 @@ class Menu:
     def update_message(self, message):
         self.text = self.font.render(message, True, (0,0,0))
         self.text_rect = self.text.get_rect()
+        self.text_rect.center = (self.HALF_SCREEN_WIDTH, 400)
+    
+    def update_message_scored(self, otro):
+        self.text = self.font.render(otro, True, (0,0,0))
+        self.text_rect = self.text.get_rect()
         self.text_rect.center = (self.HALF_SCREEN_WIDTH, self.HALF_SCREEN_HEIGHT)
